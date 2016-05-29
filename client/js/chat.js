@@ -52,6 +52,15 @@
                     _sendData(messageData);
                 }
             });
+            
+            selectors.sendButton.click(function (){
+                var name = selectors.chatName.val();
+                var msgData = {
+                    name: name,
+                    message: selectors.chatInput.val()
+                };
+                _sendData(msgData);
+            });
         }
         
         /**
@@ -60,7 +69,7 @@
          */
         function _sendData(obj){
             var newObj = {};
-            var data = _validate(obj, function(objData){
+            var data = chatHandler.validate(obj, function(objData){
                 
                 //handle error here, send custom message to user
                 if (!objData.value){
@@ -73,34 +82,6 @@
             if (data !== "undefined"){
                 socket.emit("input", data);
             }
-        }
-        
-        /**
-         * function that iterates over each key and sends the key value pair as an argument 
-         * for the callback function passed, helpful for validation
-         * @obj 
-        */
-        function _validate(obj, fn) {
-            var newObj = {};
-            var keys = Object.keys(obj);
-            for(var i=0; i<keys.length;i++){
-                var key = keys[i],
-                    value = obj[key];
-                
-                var newData = fn({
-                    key: key,
-                    value: value
-                });
-                
-                if(!newData){
-                    throw "validation error";
-                }
-                newObj[newData.key] = newData.value;
-            }
-            if (Object.keys(newObj).length === 0){
-                return null;
-            }
-            return newObj;
         }
         
         function init(){

@@ -29,7 +29,7 @@ mongo.connect(host, function(err, db){
     }
     console.log("Mongo connection successful");
     var collection = db.collection('messages');
-    app.get("/chat", function (req, res){
+    app.get("/", function (req, res){
         collection.find().limit(100).sort({_id: 1}).toArray(function (err, response){
           if (err) throw err;
           

@@ -43,22 +43,32 @@ var chatHandler = (function ($) {
    }
    
     /**
-     * function that iterates over each key and sends the key value pair as an argument 
-     * for the callback function passed, helpful for validation
-     * @obj 
-    */
-    function validate(obj, fn) {
-        var keys = Object.keys(obj);
-        for(var i=0; i<keys.length;i++){
-            var key = keys[i],
-            value = obj[key];
-            
-            fn({
-                key: key,
-                value: value
-            });
+         * function that iterates over each key and sends the key value pair as an argument 
+         * for the callback function passed, helpful for validation
+         * @obj 
+        */
+        function validate(obj, fn) {
+            var newObj = {};
+            var keys = Object.keys(obj);
+            for(var i=0; i<keys.length;i++){
+                var key = keys[i],
+                    value = obj[key];
+                
+                var newData = fn({
+                    key: key,
+                    value: value
+                });
+                
+                if(!newData){
+                    throw "validation error";
+                }
+                newObj[newData.key] = newData.value;
+            }
+            if (Object.keys(newObj).length === 0){
+                return null;
+            }
+            return newObj;
         }
-    }
     
     //API to handle the status messages
     var statusMessage = (function () {
