@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/chat.css">
+  </head>
+  <body>
+      <div class="container">
+          <div class="row">
+            <div class="col-md-offset-3 col-md-12"> 
+               <h3>Demo chat application using Nodejs.</h3>
+               <p>This application make use of:
+                   <ol>
+                       <li>Mongodb for storing chat data</li>
+                       <li>Express Framework</li>
+                       <li>Uses Ejs template engine</li>
+                       <li>socket.io for websocket connection</li>
+                   </ol>
+               </p>
+               <p>
+                   For testing please provide the name and message in the text boxes.
+                   <br>
+                   For testing real time chat, duplicate/open the url in multiple tab and test sending messages.
+               </p>
+            </div>
+        </div>
+      </div>
+    <div class="container">
+        
+        <div class="row chat-window col-xs-5 col-md-3" id="chat_window_1" style="margin-left:10px;">
+            <div class="col-xs-12 col-md-12">
+                <div class="form-group">
+                    <input type="text" class="form-control userName" placeholder= "Enter your name" id="usr">
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading top-bar">
+                        <div class="col-md-8 col-xs-8">
+                            <div class="panel-title userName"><span class="glyphicon glyphicon-comment">
+                                
+                             </div>
+                        </div>
+                        <div class="col-md-4 col-xs-4" style="text-align: right;">
+                            <a href="#"><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim"></span></a>
+                            <a href="#"><span class="glyphicon glyphicon-remove icon_close" data-id="chat_window_1"></span></a>
+                        </div>
+                        <div class="col-md-8 col-xs-8">
+                            <div class="status-message">
+                                Status: <span>Idle</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="panel-body msg_container_base">
+                        
+                        <% for(var i=0; i<chats.length; i++){ %>
+                            <div class="row msg_container base_recieve">
+                                <div class="col-md-2 col-xs-2 avatar">
+                                    <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                                </div>
+                                <div class="col-md-10 col-xs-10">
+                                    <div class="messages msg_sent">
+                                        <p><%= chats[i]["message"] %></p>
+                                        <time style="color: #6CA4C8; font-size: 12px; font-weight: 900;"><%= chats[i]["name"] %></time>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        <% } %>
+                        
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+                            <span class="input-group-btn">
+                            <button class="btn btn-primary btn-sm" id="btn-chat">Send</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="btn-group dropup">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-cog"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#" id="new_chat"><span class="glyphicon glyphicon-plus"></span> Novo</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-list"></span> Ver outras</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-remove"></span> Fechar Tudo</a></li>
+                <li class="divider"></li>
+                <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Invisivel</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/chatui.js"></script>
+    <script type="text/javascript" src="/js/chatHandler.js"></script>
+    <script type="text/javascript" src="/js/chat.js"></script>
+    
+  </body>
+</html>
